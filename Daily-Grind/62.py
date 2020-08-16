@@ -1,15 +1,16 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         
-        def recur(nums):
-            if not nums:
-                return 
-            ans.add(tuple(nums[:]))
-            for i in range(len(nums)):
-                recur(nums[:i] + nums[i+1:])
-            
-        ans = set()
-        recur(nums)
-        ans.add(tuple([]))
-        return ans
+        # []
+        # [] [1]
+        # [] [1] [2] [1,2]
+        # [] [1] [2] [1,2], [3] [1,3] [2,3] [1,2,3]
         
+        res = []
+        res += [],
+        for num in nums:
+            n = len(res)
+            for i in range(n):
+                res += (res[i][:] + [num]),
+                
+        return res
