@@ -17,8 +17,8 @@ class Solution:
                 ans = x ^ y
                 bor = ((~x) & y) << 1
                 x, y = ans, bor
-                
-        
+
+
         return sign * x
             
         
