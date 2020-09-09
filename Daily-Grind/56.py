@@ -25,3 +25,37 @@ class Solution:
                         que += newPerm, # []
                         
         return res
+
+# Second attempt
+
+from collections import deque
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        # use bit manipulation
+        # use bfs method 
+        
+        # BFS method
+        # when len == 3: add to res
+        # [] -> [1] -> [2,1] [1,2] -> [3,2,1], [2,3,1], [2,1,3], [3,1,2], [1,3,2], [1,2,3]
+        
+        que = deque([[]])
+        res = []
+        idx = 0
+        while len(que):
+            # print(que)
+            for x in range(len(que)): # 1
+                temp = que.popleft() # [1]
+                # print("temp", temp)
+                if len(temp) == len(nums):
+                    res += temp,
+                    break
+
+                for i in range(len(temp)+1): # 2
+                    newList = temp[:i] + [nums[idx]] + temp[i:]
+                    # print(newList)
+                    que += newList,
+
+            idx+=1
+        
+        return res
