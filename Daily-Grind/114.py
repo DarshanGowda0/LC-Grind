@@ -43,4 +43,52 @@ class Solution:
             
         
         
+# Second attempt
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = {i:i for i in range(n)}
+        self.rank = {i:0 for i in range(n)}
+    
+    # union by rank
+    def union(self,a,b) -> bool:
+        # print("union of", a, b)
+        parentA = self.find(a)
+        parentB = self.find(b)
+        if parentA == parentB:
+            return False
+        if self.rank[parentA] < self.rank[parentB]:
+            self.parent[parentA] = parentB
+        else:
+            self.parent[parentB] = parentA
+            if self.rank[parentA] == self.rank[parentB]:
+                self.rank[parentA] += 1
+        # print(self.parent, self.rank)
+        return True
+        
+        
+    # path compression
+    def find(self,x):
+        # print("calling find of",x)
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        # write union and find class
+        # also if e = n - 1 then false
+        # if there is back edge then it's not a tree, so union helps in constructing tree
+        # find helps in determining if its a valid tree
+        if len(edges) != n-1:
+            return False
+        
+        uf = UnionFind(n)
+        for x, y in edges:
+            if not uf.union(x, y):
+                return False
+        
+        return True
+        
         
