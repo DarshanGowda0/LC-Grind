@@ -26,3 +26,5 @@ class Solution:
                     visited.add((nx,ny))
                     
         return -1
+
+    
