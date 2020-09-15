@@ -46,3 +46,47 @@ class Solution:
               
         return res
                 
+
+# second attempt
+
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        # construct a trie for the words
+        # start dfs with every node from the board and and cross off all words in the trie
+        directions = [(0,1), (1,0), (0,-1), (-1,0)]
+        res = []
+        m, n = len(board), len(board[0])
+        
+        def dfs(i, j, node, seen):
+            childNode = node[board[i][j]]
+            if '$' in childNode:
+                res.append(childNode['$'])
+                del childNode['$']
+                
+            for p, q in directions:
+                nx, ny = p+i, q+j
+                if 0 <= nx < m and 0 <= ny < n and (nx,ny) not in seen and board[nx][ny] in childNode:
+                    seen.add((nx, ny))
+                    dfs(nx, ny, childNode, seen)
+                    seen.remove((nx,ny))
+        
+        trie = {}
+        for word in words:
+            node = trie
+            for c in word:
+                if c not in node:
+                    node[c] = {}
+                node = node[c]
+            node['$'] = word
+        
+        
+        
+        for i in range(m):
+            for j in range(n):
+                node = trie
+                if board[i][j] in node:
+                    seen = {(i,j)}
+                    dfs(i, j, node, seen)
+                    # seen.remove((i,j))
+                    
+        return res
