@@ -27,3 +27,32 @@ class Solution(object):
         if is_col:
             for i in range(R):
                 matrix[i][0] = 0
+
+# second attempt
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        # set the flags on the top row/col
+        # iterate all except top row & col
+        # iterate again and make all corresponding rows and columns zero
+        # iterate the top row and column to mark them zero
+        
+        isFirstCol = False
+        for i in range(len(matrix)):
+            if matrix[i][0] == 0:
+                isFirstCol = True
+            for j in range(1, len(matrix[0])):
+                if matrix[i][j] == 0:
+                    matrix[0][j] = matrix[i][0] = 0
+                    
+        for i in range(1, len(matrix)):
+            for j in range(1, len(matrix[0])):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+         
+        if matrix[0][0] == 0:
+            for j in range(len(matrix[0])):
+                matrix[0][j] = 0 
+                
+        if isFirstCol:        
+            for i in range(len(matrix)):
+                matrix[i][0] = 0

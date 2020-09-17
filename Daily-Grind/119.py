@@ -17,3 +17,32 @@ class Solution(object):
                 di = (di + 1) % 4
                 r, c = r + dr[di], c + dc[di]
         return ans
+
+#second attempt
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        # define directions in order
+        # perform dfs in the order of directions until you hit end
+        if not len(matrix):
+            return []
+        m, n = len(matrix), len(matrix[0])
+        
+        
+        di = [(0,1), (1,0), (0,-1), (-1,0)]
+        
+        seen = set()
+        res = []
+        i = 0
+        x, y = 0, 0
+        for _ in range(m*n):
+            res += matrix[x][y],
+            seen.add((x,y))
+            nx, ny = x + di[i][0], y + di[i][1]
+            if 0 <= nx < m and 0 <= ny < n and (nx, ny) not in seen:
+                x, y = nx, ny
+            else:
+                i = (i + 1) % 4
+                x, y = x + di[i][0], y + di[i][1]
+        
+        return res
+        

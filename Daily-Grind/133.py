@@ -33,6 +33,39 @@ class Solution:
             idx += 1
         
         return res
+
+# second attempt
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        # we know that all intervals untill conflict are sorted => straight to res
+        # when conflict, merge and add to result
+        # merge conflict with remaining one by one and add to res
+        
+        start, end = newInterval
+        i, n = 0, len(intervals)
+        res = []
+        while i < n and intervals[i][1] < start:
+            res += intervals[i],
+            i+=1
+           
+        if i < n and intervals[i][1] < start:
+            start, end = min(start, intervals[i][0]), max(end, intervals[i][1])
+            i+=1
+        
+        while i < n:
+            # print(i)
+            if end < intervals[i][0]:
+                res += [start, end],
+                start, end = intervals[i]
+            else:
+                start, end = min(start, intervals[i][0]), max(end, intervals[i][1])
+            i+=1
+            
+        res += [start, end],
+        return res
+        
+            
+        
             
         
         
