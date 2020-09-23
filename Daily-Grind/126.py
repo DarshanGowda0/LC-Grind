@@ -32,3 +32,24 @@ class Solution:
             res = max(res, maxSoFar)
             
         return res
+
+# second attempt
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        
+        maxSoFar = nums[0]
+        minSoFar = nums[0]
+        res = maxSoFar
+        
+        for num in nums[1:]:
+            tempMax = max(num, maxSoFar*num, minSoFar*num)
+            minSoFar = min(num, maxSoFar*num, minSoFar*num)
+            maxSoFar = tempMax
+            
+            res = max(res, maxSoFar)
+            
+        return res
+            

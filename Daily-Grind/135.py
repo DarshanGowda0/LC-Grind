@@ -29,4 +29,31 @@ class Solution:
 
         return mDict[node]
             
+# second attempt
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+from collections import deque
+
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return None
         
+        nodeDict = {}
+        que = deque([node])
+        nodeDict[node] = Node(node.val)
+        while que:
+            t = que.popleft()
+            for child in t.neighbors:
+                if child not in nodeDict:
+                    que.append(child)
+                    nodeDict[child] = Node(child.val)
+                nodeDict[t].neighbors.append(nodeDict[child])
+                
+                    
+        return nodeDict[node]   
