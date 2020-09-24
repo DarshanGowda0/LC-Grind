@@ -40,4 +40,57 @@ class Solution:
         
         return "" if ans[0] == float('inf') else s[ans[1]:ans[2]+1]
                 
-                
+# second attempt
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        # keep dictionary of T and numberOfUniqueChars 
+        # use sliding window and determine the min window
+        
+        tDict = {}
+        for c in t:
+            if c not in tDict:
+                tDict[c] = 0
+            tDict[c]+=1
+        
+        uniqueChars = len(tDict)
+        
+        start, end = 0, 0
+        
+        sDict = {}
+        found = 0
+        res = float('inf')
+        out = ""
+        while end < len(s):
+            # print("end", end, "start", start)
+            char = s[end]
+            if char not in sDict:
+                sDict[char] = 0
+            sDict[char]+=1
+            
+            if char in tDict and sDict[char] == tDict[char]:
+                found+=1
+                if found == uniqueChars and end - start + 1 < res:
+                    res = end - start + 1
+                    out = s[start:end+1]
+                    
+            # try and decrease the window by increasing start
+            if found == uniqueChars:
+                while start <= end and found == uniqueChars:
+                    # print("start", start)
+                    if end - start + 1 < res:
+                        res = end - start + 1
+                        out = s[start:end+1]
+
+                    char = s[start]
+                    sDict[char] -= 1
+                    if char in tDict and sDict[char] < tDict[char]:
+                        found -= 1
+                    start += 1                
+                        
+            
+            end += 1
+        
+        return out
+        
+        
+        
