@@ -195,4 +195,63 @@ class HashMapL(HashMap):
         return key % self.capacity
 
 
+# hashmap impl with double hashing
+
+class HashMapD(HashMap):
+    def __init__(self):
+        self.capacity = 103
+        self.table = [None] * self.capacity
+        self.prime = 87
+
+    def put(self, key, val):
+        idx = self.hash(key)
+        if self.table[idx]:
+            i = 1
+            while True:
+                idx2 = (idx + i * self.hash2(key)) % self.capacity
+                if not self.table[idx2]:
+                    self.table[idx2] = (key, val)
+                    break
+                i += 1
+        else:
+            self.table[idx] = (key, val)
+    
+    def get(self, key):
+        i = 0
+        idx = (self.hash(key) + i * self.hash2(key)) % self.capacity
+        while self.table[idx]:
+            if self.table[idx] == key:
+                return self.table[idx][1]
+            i += 1
+            idx = (self.hash(key) + i * self.hash2(key)) % self.capacity
+        raise Exception("Key not found!")
+    
+    def delete(self, key):
+        i = 0
+        idx = (self.hash(key) + i * self.hash2(key)) % self.capacity
+        while self.table[idx]:
+            if self.table[idx] == key:
+                self.table[idx] = None
+                return
+            i += 1
+            idx = (self.hash(key) + i * self.hash2(key)) % self.capacity
+        raise Exception("Key not found!")
+            
+    
+    def exists(self, key):
+        i = 0
+        idx = (self.hash(key) + i * self.hash2(key)) % self.capacity
+        while self.table[idx]:
+            if self.table[idx] == key:
+                return True
+            i += 1
+            idx = (self.hash(key) + i * self.hash2(key)) % self.capacity
+        return False
+
+    def hash(self, key):
+        return key % self.capacity
+
+    def hash2(self, key):
+        return self.prime - (key % self.prime)
+
 
