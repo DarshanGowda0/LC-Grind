@@ -13,7 +13,7 @@ def numberOfPairs(nums, target):
     hCount = 0
     for key, val in mDict.items():
         # edge case for half
-        if target - key == key and target - key in mDict:
+        if target - key == key:
             hCount += (val * (val - 1)) // 2
         elif target - key in mDict:
             print(key)

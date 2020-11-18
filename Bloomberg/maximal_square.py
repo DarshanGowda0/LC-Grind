@@ -12,8 +12,3 @@ class Solution:
                     res = max(res, dp[i+1][j+1])
                     
         return res*res
-        
-        
-
-maarten.roode@unity3d
-Maarten.roode@unity3d.com
