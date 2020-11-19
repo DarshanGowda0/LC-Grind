@@ -73,14 +73,34 @@ def numberOfPairsBottomUp(nums, target):
                 count1 = dp[idx - 1][remainingSum - nums[idx]]
             # ignore
             count2 = dp[idx - 1][remainingSum]
-            
+
             dp[idx][remainingSum] = count1 + count2
     
     return dp[n - 1][target]
 
+def numberOfPairsBottomUpLessMemory(nums, target):
+    n = len(nums)
+    dp = [-1 for _ in range(target + 1)]
+
+    # base case
+    dp[0] = 1
+    for rSum in range(1, target + 1):
+        dp[rSum] = 1 if nums[0] == rSum else 0
+
+    for idx in range(1, n):
+        for remainingSum in reversed(range(1, target+1)):
+            count1 = 0
+            if nums[idx] <= remainingSum:
+                count1 = dp[remainingSum - nums[idx]]
+            count2 = dp[remainingSum]
+
+            dp[remainingSum] = count1 + count2
+
+    return dp[-1]
+
 if __name__ == "__main__":
-    nums = [1, 199, 199, 1, 198, 180, 20, 10, 10, 5, 5, 200]
+    nums = [1, 1, 2, 3]
     # print(nums)
-    res = numberOfPairsBottomUp(nums, 200)
+    res = numberOfPairsBottomUpLessMemory(nums, 4)
     print(res)
 
